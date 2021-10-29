@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="297px" height="394px" viewBox="0 0 297 394" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>function removeUnnee</title>
+    <defs>
+        <polygon id="path-1" points="0 0 294.465588 0 294.465588 169.968079 295.75 169.968079 295.75 392.5 0 392.5"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3" transform="translate(-868.000000, -160.000000)">
+            <g id="front" transform="translate(760.000000, 61.000000)">
+                <g id="function-removeUnnee" transform="translate(108.250000, 99.750000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#000000" opacity="0" xlink:href="#path-1"></use>
+                    <text mask="url(#mask-2)" font-family="UbuntuMono-Regular, Ubuntu Mono" font-size="10" font-weight="normal" letter-spacing="-0.172413796" fill="#444444">
+                        <tspan x="5.5" y="-114.25">function removeUnneededFolders {</tspan>
+                        <tspan x="5.5" y="-103.275">    rm -rf [Cc][Mm][Aa]ctions</tspan>
+                        <tspan x="5.5" y="-92.3">    rm -rf [Ll]inage[Aa]ctions</tspan>
+                        <tspan x="5.5" y="-81.3249999">    rm -rf [Dd]oze</tspan>
+                        <tspan x="5.5" y="-70.3499999">    rm -rf [Kk]ey[Hh]andler</tspan>
+                        <tspan x="5.5" y="-59.3749999">}</tspan>
+                        <tspan x="5.5" y="-48.3999999"></tspan>
+                        <tspan x="5.5" y="-37.4249998">DEVICE=${1:=${DEVICE}}</tspan>
+                        <tspan x="5.5" y="-26.4499998">JOBS=${JOBS:=12}</tspan>
+                        <tspan x="5.5" y="-15.4749998">ARGS=($@)</tspan>
+                        <tspan x="5.5" y="-4.49999976">REPO_ARGS=(${ARGS[@]:1})</tspan>
+                        <tspan x="5.5" y="6.47500026"></tspan>
+                        <tspan x="5.5" y="17.4500003">DEVICES_ROOT="$(dirname "$(readlink -f "${0}")")"</tspan>
+                        <tspan x="5.5" y="28.4250003">REPO_ROOT="$(readlink -f ${DEVICES_ROOT}/../..)"</tspan>
+                        <tspan x="5.5" y="39.4000003"></tspan>
+                        <tspan x="5.5" y="50.3750004">if [ -z $DEVICE ]; then</tspan>
+                        <tspan x="5.5" y="61.3500004">    echo "Please specify a device codename"</tspan>
+                        <tspan x="5.5" y="72.3250004">    exit 0</tspan>
+                        <tspan x="5.5" y="83.3000004">fi</tspan>
+                        <tspan x="5.5" y="94.2750005"></tspan>
+                        <tspan x="5.5" y="105.25">if ! [ -f $DEVICES_ROOT/manifests/*_$DEVICE.xml ]; then</tspan>
+                        <tspan x="5.5" y="116.225001">    echo "The given device is not supported. :("</tspan>
+                        <tspan x="5.5" y="127.200001">else</tspan>
+                        <tspan x="5.5" y="138.175001">    VENDOR=$(basename $DEVICES_ROOT/manifests/*_$DEVICE.xml | cut -d "_" -f1)</tspan>
+                        <tspan x="5.5" y="149.150001">    echo "*****************************************"</tspan>
+                        <tspan x="5.5" y="160.125001">    echo "I: Configuring for device $VENDOR"_"$DEVICE"</tspan>
+                        <tspan x="5.5" y="171.100001">    echo "*****************************************"</tspan>
+                        <tspan x="5.5" y="182.075001"></tspan>
+                        <tspan x="5.5" y="193.050001">    # Test if there is already a device configured and the folder exists</tspan>
+                        <tspan x="5.5" y="204.025001">    if [ -f $REPO_ROOT/.repo/local_manifests/device.xml ]; then</tspan>
+                        <tspan x="5.5" y="215.000001">        rm $REPO_ROOT/.repo/local_manifests/device.xml</tspan>
+                        <tspan x="5.5" y="225.975001">    elif ! [ -d $REPO_ROOT/.repo/local_manifests/ ]; then</tspan>
+                        <tspan x="5.5" y="236.950001">        mkdir $REPO_ROOT/.repo/local_manifests/</tspan>
+                        <tspan x="5.5" y="247.925001">    fi</tspan>
+                        <tspan x="5.5" y="258.900001"></tspan>
+                        <tspan x="5.5" y="269.875001">    # Link the device manifest to the local_manifests folder</tspan>
+                        <tspan x="5.5" y="280.850001">    ln $DEVICES_ROOT/manifests/$VENDOR"_"$DEVICE.xml $REPO_ROOT/.repo/local_manifests/device.xml</tspan>
+                        <tspan x="5.5" y="291.825001"></tspan>
+                        <tspan x="5.5" y="302.800001">    # Synchronize new new sources</tspan>
+                        <tspan x="5.5" y="313.775001">    repo sync --network-only -c -j$JOBS -q ${REPO_ARGS[@]}</tspan>
+                        <tspan x="5.5" y="324.750001">    repo sync --local-only -c -j$JOBS -q ${REPO_ARGS[@]}</tspan>
+                        <tspan x="5.5" y="335.725001"></tspan>
+                        <tspan x="5.5" y="346.700001">    # Refresh the device &amp; common repositories so apks and jars are not copied</tspan>
+                        <tspan x="5.5" y="357.675001">    # For this to work, all apks and jars need to be removed from</tspan>
+                        <tspan x="5.5" y="368.650001">    # device/$VENDOR/$DEVICE/*proprietary-files*.txt and</tspan>
+                        <tspan x="5.5" y="379.625001">    # device/$VENDOR/$DEVICE_COMMON/*proprietary-files*.txt</tspan>
+                        <tspan x="5.5" y="390.600001"></tspan>
+                        <tspan x="5.5" y="401.575001">    # A device can have multiple commons as it seems, so we store them in</tspan>
+                        <tspan x="5.5" y="412.550001">    # DEVICE_COMMON_TEMP and loop through them later.</tspan>
+                        <tspan x="5.5" y="423.525001">    DEVICE_COMMON_TEMP=$(ls -d $REPO_ROOT/device/$VENDOR/*common* 2&gt;/dev/null | rev | cut -d "/" -f1 | rev)</tspan>
+                        <tspan x="5.5" y="434.500001">    VENDOR_COMMON_TEMP=$(ls -d $REPO_ROOT/vendor/$VENDOR/*common* 2&gt;/dev/null | rev | cut -d "/" -f1 | rev)</tspan>
+                        <tspan x="5.5" y="445.475001"></tspan>
+                        <tspan x="5.5" y="456.450001">    # OnePlus uses the device/oppo/common instead of expected device/oneplus/common for some targets.</tspan>
+                        <tspan x="5.5" y="467.425001">    # We use a small workaround in order to catch these as well.</tspan>
+                        <tspan x="5.5" y="478.400001">    if [ $VENDOR="oneplus" ]; then</tspan>
+                        <tspan x="5.5" y="489.375001">        DEVICE_COMMON_TEMP2=$(ls -d $REPO_ROOT/device/oppo/*common* 2&gt;/dev/null | rev | cut -d "/" -f1 | rev)</tspan>
+                        <tspan x="5.5" y="500.350001">        VENDOR2="oppo"</tspan>
+                        <tspan x="5.5" y="511.325001">    fi</tspan>
+                        <tspan x="5.5" y="522.300001"></tspan>
+                        <tspan x="5.5" y="533.275001">    DEVICE_TREE=$REPO_ROOT/device/$VENDOR/$DEVICE</tspan>
+                        <tspan x="5.5" y="544.250001">    VENDOR_TREE=$REPO_ROOT/vendor/$VENDOR</tspan>
+                        <tspan x="5.5" y="555.225001"></tspan>
+                        <tspan x="5.5" y="566.200001">    echo "*******************************************"</tspan>
+                        <tspan x="5.5" y="577.175002">    if [ -f $DEVICE_TREE/setup-makefiles.sh ]; then</tspan>
+                        <tspan x="5.5" y="588.150002">        echo "I: Refreshing device vendor repository: device/$VENDOR/$DEVICE"</tspan>
+                        <tspan x="5.5" y="599.125002">        (</tspan>
+                        <tspan x="5.5" y="610.100002">            cd $DEVICE_TREE</tspan>
+                        <tspan x="5.5" y="621.075002">            for i in $(find . -name "*proprietary-*.txt"); do</tspan>
+                        <tspan x="5.5" y="632.050002">                echo "I: Processing proprietary blob file: device/$VENDOR/$DEVICE/$i"</tspan>
+                        <tspan x="5.5" y="643.025002">                grep -r -v -E '(^.*\.{1}(jar|apk)[|]?.*)' $i &gt;$i".tmp" &amp;&amp; mv $i".tmp" $i</tspan>
+                        <tspan x="5.5" y="654.000002">            done</tspan>
+                        <tspan x="5.5" y="664.975002">            # Set executable bit, needed for some device trees</tspan>
+                        <tspan x="5.5" y="675.950002">            chmod +x ./setup-makefiles.sh</tspan>
+                        <tspan x="5.5" y="686.925002">            # Actually run the script</tspan>
+                        <tspan x="5.5" y="697.900002">            ./setup-makefiles.sh</tspan>
+                        <tspan x="5.5" y="708.875002">        )</tspan>
+                        <tspan x="5.5" y="719.850002">    fi</tspan>
+                        <tspan x="5.5" y="730.825002"></tspan>
+                        <tspan x="5.5" y="741.800002">    # Since we don't use SELinux we want to make sure we remove the</tspan>
+                        <tspan x="5.5" y="752.775002">    # ",context=u....:s0" from the fstab file(s) in the $DEVICE folder so we can</tspan>
+                        <tspan x="5.5" y="763.750002">    # mount the partitions without issues</tspan>
+                        <tspan x="5.5" y="774.725002">    cd $DEVICE_TREE &amp;&amp; for j in $(find . -name "fstab.*"); do</tspan>
+                        <tspan x="5.5" y="785.700002">        echo "I: Processing fstab file: device/$VENDOR/$DEVICE/$j"</tspan>
+                        <tspan x="5.5" y="796.675002">        sed -r 's/(,context=.*:s0)//' $j &gt;$j".tmp" &amp;&amp; mv $j".tmp" $j</tspan>
+                        <tspan x="5.5" y="807.650002">    done</tspan>
+                        <tspan x="5.5" y="818.625002"></tspan>
+                        <tspan x="5.5" y="829.600002">    # Since we don't have SettingsLib, remove components that rely on it (which we therefore also don't use)</tspan>
+                        <tspan x="5.5" y="840.575002">    # such as CMActions/LineageActions, KeyHandler and Doze. Simply removing the folder will disable them.</tspan>
+                        <tspan x="5.5" y="851.550002">    cd $DEVICE_TREE</tspan>
+                        <tspan x="5.5" y="862.525002">    echo "I: Removing components relying on SettingsLib from: device/$VENDOR/$DEVICE"</tspan>
+                        <tspan x="5.5" y="873.500002">    removeUnneededFolders</tspan>
+                        <tspan x="5.5" y="884.475002"></tspan>
+                        <tspan x="5.5" y="895.450002">    # Loop through values in $DEVICE_COMMON_TEMP</tspan>
+                        <tspan x="5.5" y="906.425002">    if [ -n "$DEVICE_COMMON_TEMP" ]; then</tspan>
+                        <tspan x="5.5" y="917.400002">        for k in $DEVICE_COMMON_TEMP; do</tspan>
+                        <tspan x="5.5" y="928.375002">            echo "I: Procession device vendor common folder: device/$VENDOR/$k"</tspan>
+                        <tspan x="5.5" y="939.350002">            DEVICE_COMMON_TREE=$REPO_ROOT/device/$VENDOR/$k</tspan>
+                        <tspan x="5.5" y="950.325002"></tspan>
+                        <tspan x="5.5" y="961.300002">            # We need to have $VENDOR, $DEVICE and $DEVICE_COMMON or</tspan>
+                        <tspan x="5.5" y="972.275002">            # $PLATFORM_COMMON available for setup-makefiles.sh in the common</tspan>
+                        <tspan x="5.5" y="983.250002">            # repository, therefore export them.</tspan>
+                        <tspan x="5.5" y="994.225002">            export VENDOR</tspan>
+                        <tspan x="5.5" y="1005.2">            export DEVICE</tspan>
+                        <tspan x="5.5" y="1016.175">            DEVICE_COMMON_HOLDER=$DEVICE_COMMON</tspan>
+                        <tspan x="5.5" y="1027.15">            export DEVICE_COMMON=${DEVICE_COMMON:=$k}</tspan>
+                        <tspan x="5.5" y="1038.125">            PLATFORM_COMMON_HOLDER=$PLATFORM_COMMON</tspan>
+                        <tspan x="5.5" y="1049.1">            export PLATFORM_COMMON=${PLATFORM_COMMON:=$DEVICE_COMMON}</tspan>
+                        <tspan x="5.5" y="1060.075"></tspan>
+                        <tspan x="5.5" y="1071.05">            if [ -f $DEVICE_COMMON_TREE/setup-makefiles.sh ]; then</tspan>
+                        <tspan x="5.5" y="1082.025">                (</tspan>
+                        <tspan x="5.5" y="1093">                    cd $DEVICE_COMMON_TREE</tspan>
+                        <tspan x="5.5" y="1103.975">                    for l in $(find . -name "*proprietary-*.txt"); do</tspan>
+                        <tspan x="5.5" y="1114.95">                        echo "I: Processing proprietary blob file: device/$VENDOR/$k/$l"</tspan>
+                        <tspan x="5.5" y="1125.925">                        grep -r -v -E '(^.*\.{1}(jar|apk)[|]?.*)' $l &gt;$l".tmp" &amp;&amp; mv $l".tmp" $l</tspan>
+                        <tspan x="5.5" y="1136.9">                    done</tspan>
+                        <tspan x="5.5" y="1147.875">                    # Set executable bit, needed for some device trees</tspan>
+                        <tspan x="5.5" y="1158.85">                    chmod +x ./setup-makefiles.sh</tspan>
+                        <tspan x="5.5" y="1169.825">                    # Actually run the script</tspan>
+                        <tspan x="5.5" y="1180.8">                    ./setup-makefiles.sh</tspan>
+                        <tspan x="5.5" y="1191.775">                )</tspan>
+                        <tspan x="5.5" y="1202.75">            fi</tspan>
+                        <tspan x="5.5" y="1213.725"></tspan>
+                        <tspan x="5.5" y="1224.7">            # Since we don't use SELinux we want to make sure we remove the</tspan>
+                        <tspan x="5.5" y="1235.675">            # ",context=u....:s0" from the fstab file(s) in the $DEVICE_COMMON</tspan>
+                        <tspan x="5.5" y="1246.65">            # folder so we can mount the partitions without issues</tspan>
+                        <tspan x="5.5" y="1257.625">            cd $DEVICE_COMMON_TREE &amp;&amp; for m in $(find . -name "fstab.*"); do</tspan>
+                        <tspan x="5.5" y="1268.6">                echo "I: Processing fstab file: device/$VENDOR/$m"</tspan>
+                        <tspan x="5.5" y="1279.575">                sed -r 's/(,context=.*:s0)//' $m &gt;$m".tmp" &amp;&amp; mv $m".tmp" $m</tspan>
+                        <tspan x="5.5" y="1290.55">            done</tspan>
+                        <tspan x="5.5" y="1301.525"></tspan>
+                        <tspan x="5.5" y="1312.5">            # Since we don't have SettingsLib, remove components that rely on it (which we therefore also don't use)</tspan>
+                        <tspan x="5.5" y="1323.475">            # such as CMActions/LineageActions, KeyHandler and Doze. Simply removing the folder will disable them.</tspan>
+                        <tspan x="5.5" y="1334.45">            cd $DEVICE_COMMON_TREE</tspan>
+                        <tspan x="5.5" y="1345.425">            echo "I: Removing components relying on SettingsLib from: device/$VENDOR/$k"</tspan>
+                        <tspan x="5.5" y="1356.4">            removeUnneededFolders</tspan>
+                        <tspan x="5.5" y="1367.375"></tspan>
+                        <tspan x="5.5" y="1378.35">            # Since we can have multiple common repos we need to make sure to set</tspan>
+                        <tspan x="5.5" y="1389.325">            # back the original values in case they exist. Otherwise unset the value.</tspan>
+                        <tspan x="5.5" y="1400.3">            if [ -n "$DEVICE_COMMON_HOLDER" ]; then</tspan>
+                        <tspan x="5.5" y="1411.275">                DEVICE_COMMON=$DEVICE_COMMON_HOLDER</tspan>
+                        <tspan x="5.5" y="1422.25">            else</tspan>
+                        <tspan x="5.5" y="1433.225">                unset DEVICE_COMMON</tspan>
+                        <tspan x="5.5" y="1444.2">            fi</tspan>
+                        <tspan x="5.5" y="1455.175">            if [ -n "$PLATFORM_COMMON_HOLDER" ]; then</tspan>
+                        <tspan x="5.5" y="1466.15">                PLATFORM_COMMON=$PLATFORM_COMMON_HOLDER</tspan>
+                        <tspan x="5.5" y="1477.125">            else</tspan>
+                        <tspan x="5.5" y="1488.1">                unset PLATFORM_COMMON</tspan>
+                        <tspan x="5.5" y="1499.075">            fi</tspan>
+                        <tspan x="5.5" y="1510.05">        done</tspan>
+                        <tspan x="5.5" y="1521.025">    fi</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
