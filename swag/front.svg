@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="401px" height="148px" viewBox="0 0 401 148" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Group</title>
+<svg width="407px" height="147px" viewBox="0 0 407 147" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>commit to maintain</title>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="9" transform="translate(-745.000000, -483.000000)">
-            <g id="Group" transform="translate(745.000000, 483.000000)">
-                <text id="Committed-To-Maintai" font-family="Ubuntu-Light, Ubuntu" font-size="36" font-weight="300" fill="#FFFFFF">
-                    <tspan x="2.15" y="141">Committed To Maintaine</tspan>
+        <g id="1" transform="translate(-854.000000, -369.000000)">
+            <g id="commit-to-maintain" transform="translate(854.000000, 369.000000)">
+                <text id="#-Committed-To-Maint" font-family="Ubuntu-Light, Ubuntu" font-size="33" font-weight="300" fill="#FFFFFF">
+                    <tspan x="0.7315" y="141"># Committed To Maintain #</tspan>
                 </text>
                 <text id="UBport-•-er" font-family="Ubuntu-Bold, Ubuntu" font-size="88" font-weight="bold" letter-spacing="-5.86666667">
-                    <tspan x="0.262666667" y="82" fill="#FFFFFF">UBport </tspan>
-                    <tspan x="284.444" y="82" font-size="58" letter-spacing="-3.86666667" fill="#E95420">•</tspan>
-                    <tspan x="301.689333" y="82" fill="#E95420"> er</tspan>
+                    <tspan x="1.26266667" y="82" fill="#FFFFFF">UBport </tspan>
+                    <tspan x="285.444" y="82" font-size="58" letter-spacing="-3.86666667" fill="#E95420">•</tspan>
+                    <tspan x="302.689333" y="82" fill="#E95420"> er</tspan>
                 </text>
             </g>
         </g>
